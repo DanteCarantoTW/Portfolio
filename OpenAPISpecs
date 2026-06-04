@@ -1,0 +1,2033 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "One Inc API v1",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "0.0.1"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "api-test.oneinc.com/v1"
+    },
+    {
+      "url": "api-stg.oneinc.com/v1"
+    },
+    {
+      "url": "api.oneinc.com/v1"
+    }
+  ],
+  "security": [
+    {
+      "bearer_auth": []
+    }
+  ],
+  "paths": {
+    "/oauth2/token": {
+      "post": {
+        "summary": "Create Token",
+        "description": "Create OAuth2.0 Bearer Token.",
+        "tags": [
+          "OAuth"
+        ],
+        "operationId": "getToken",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/auth"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT access token"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "Token expiration time in seconds"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "description": "Type of the token (e.g., Bearer)"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "description": "Authorized scopes"
+                    }
+                  }
+                },
+                "example": {
+                  "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhERUYyQjVFNEJBQTJGQzlENDVFRUVBMDI0RjU5NzgzNUEzNDVCNEJSUzI1NiIsIng1dCI6ImplOHJYa3VxTDhuVVh1NmdKUFdYZzFvMFcwcyIsInR5cCI6ImF0K2p3dCJ9.eyJpc3MiOiJodHRwczovL3N0Z3BvcnRhbG9uZS5wcm9jZXNzb25lcGF5bWVudHMuY29tL0lkZW50aXR5UHJvdmlkZXIiLCJuYmYiOjE3Mjc5MTMyMzQsImlhdCI6MTcyNzkxMzIzNCwiZXhwIjoxNzI3OTE2ODM0LCJhdWQiOiJHYXRld2F5LlBheW91dHMiLCJzY29wZSI6WyJHYXRld2F5LlBheW91dHMuUHJlc2VsZWN0LkNyZWF0ZSIsIkdhdGV3YXkuUGF5b3V0cy5QcmVzZWxlY3QuUmVhZCIsIkdhdGV3YXkuUGF5b3V0cy5QcmVzZWxlY3QuV3JpdGUiXSwiY2xpZW50X2lkIjoiY2JhOTFjMWUtNTE3ZS00MDk1LWIwM2MtNWJlODQzYTRkYTIzIiwib25lX2luY19jbGllbnRfaWQiOiJlMmQ4ZWFkMi04MTNiLTQyNTAtYjJkMS0zODI4NDMwODA3OTYifQ.lkRN80ouhdxa_fyyvf6N6Ya5RuJfYwCezqJJYCpR9dSQxdmLj6wSWUqxlIFmJbtqIW_R2cr8uwhJSYgwJ7-DHu9zgT0nRl90YNjLRlrGnA1qUJ5haCd6kLHZRvgpUqKFDr3ZB1CC-tTsFxJ9CFdacac798eK8lEabisUusHb6PLw4u2qahgkzk-5D3V-euJeRNvku_J7RQUDbnRAGbkDHV6xh0UN8DE-Gz1IqFDjvR5HJ6j4AgeIr2S1kYmXsn07LtiwsLuhRwi-1vNYfLgZiz430YD-ZS-cgB_TGwOxgSpuZ8ZPWtg2f6jCauvEKoI_lmob0fHuLobdEPlgvOux7g",
+                  "expires_in": 3600,
+                  "token_type": "Bearer",
+                  "scope": "Gateway.ClaimsPay.PaymentMaster.Create"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/paymentMaster": {
+      "post": {
+        "summary": "Create Payment Master",
+        "description": "The CreatePaymentMaster API is used for creating payments in ClaimsPay.",
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "CreatePaymentMaster",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "PM_PaymentType",
+                  "PM_PaymentID",
+                  "PM_Amount",
+                  "PM_CarrierId",
+                  "PM_UserId",
+                  "PM_User_FirstName",
+                  "PM_User_LastName",
+                  "PM_User_EmailAddress",
+                  "PM_User_PhoneNumber",
+                  "CL_ClaimNumber",
+                  "PMA_MailTo",
+                  "PMA_Street",
+                  "PMA_City",
+                  "PMA_State",
+                  "PMA_Zipcode",
+                  "PMA_Country",
+                  "RMA_MailTo",
+                  "RMA_Street",
+                  "RMA_City",
+                  "RMA_State",
+                  "RMA_Zipcode",
+                  "RMA_Country",
+                  "PM_Additional_Text_16"
+                ],
+                "properties": {
+                  "PM_PaymentType": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Determines the payment type of the request. This field is case sensitive, and values must be sent as defined - \"Contact(s)\", \"Vendor\", \"Lienholder\", \"Contact(s) and Vendor\", or \"Contact(s) and Mortgagee\".\n\n**Note:** \n- Only the valid values defined for this field will be accepted. \n- If this field is blank, the request will result in an error code that the field is Required.\n- If an invalid value is passed, the request will result in an error code that the PaymentType is not valid.",
+                    "example": "Contact(s)"
+                  },
+                  "PM_PaymentID": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this payment from the call originating system. This is the same as PM_CR_PaymentID that we return in the webhook, and is also the same as CRTrackingNumber in the payment feedback file.",
+                    "example": "PMTID123456"
+                  },
+                  "PM_Amount": {
+                    "type": "string",
+                    "description": "Amount to pay contact or vendor. This must be a decimal with a maximum of 26 digits and 2 decimal places.\n",
+                    "example": "17001.12"
+                  },
+                  "PM_CarrierId": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Pre-defined unique identifier for each of your carriers and sub-carriers. This is used for managing branding and account funding. Required for each payment request.\n",
+                    "example": "World Insurance"
+                  },
+                  "PM_RequestReason": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Reason for making this payment. Required for \"Contacts and Mortgagee\" payment type.",
+                    "example": "Loss Payment"
+                  },
+                  "PM_LoanAccountNumber": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Auto / Home Loan Account Number. Required for payment types - \"Lienholder\" and \"Contact(s) and Mortgagee\". The only special character that can be used currently is hyphen “-”.",
+                    "example": "LN123456"
+                  },
+                  "PM_VIN": {
+                    "type": "string",
+                    "maxLength": 17,
+                    "description": "Primary Manufacturer Vehicle Identification Number. Identifies the base VIN issued by the OEM before any dealer or region-specific modifications.\u003Cbr\u003EOptional for the Lienholder flow (to maintain backward compatibility with existing lienholder clients).\u003Cbr\u003E**Note:**This field supplements the Loan Account Number, which is a required field and is leveraged in lienholder payment workflows to enable matching of vehicle and loan account data.",
+                    "example": "1HGCM82633A004352"
+                  },
+                  "PM_DisbursementLabel": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "pattern": "^[a-zA-Z0-9- ]$",
+                    "description": "This field is only used for Non-Claim Disbursement payments. Required for these types. The text for the label of the first of the two-factor authentication values. Accepts upper case letters, lower case letters, numbers, spaces, and hyphens. Example - Account Number."
+                  },
+                  "PM_DisbursementValue": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "pattern": "^[a-zA-Z0-9- ]$",
+                    "description": "This field is only used for Non-Claim Disbursement payments. Required for these types. The value is associated with the DisbursementLabel. Accepts upper case letters, lower case letters, numbers, spaces, and hyphens. Example: AN-12345."
+                  },
+                  "PM_Expedite": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Check payment will be delivered via UPS overnight mail (when applicable). \"Y\" or \"N\". If PM_Expedite is N or NULL, mail will be sent via USPS by default. Do not set PM_Expedite to Y if mailing to a P.O. Box."
+                  },
+                  "PM_Certified": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Check payment will be delivered via certified mail (when applicable). \"Y\" or \"N\"."
+                  },
+                  "PM_ENV": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Indicates the environment/system the payment was issued. Valid values are \"DEV\", \"QA\", or \"PROD\". This is used for tracking activity in the different environments/systems."
+                  },
+                  "PM_PrintNow": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Flag for a check to be printed locally. Default value = Null, which is treated as \"N\". \"Y\" or \"N\". PM_PrintNow functionality will only print images of the front page of the check."
+                  },
+                  "PM_Check_Fraud_Language": {
+                    "type": "string",
+                    "maxLength": 1400,
+                    "description": "Allows English characters and specified Spanish characters. Fraud language displayed within the customer portal and on the check above the endorsement line. This field accepts 1400 characters in the API, but if printed on the back of a check, text longer than 830 characters is discarded. No encoded text allowed.\n"
+                  },
+                  "PM_DocCount": {
+                    "type": "integer",
+                    "maximum": 1,
+                    "description": "Total number of documents expected to be attached to the payment. When there are no document attachments for the payment, do not send this field.\n"
+                  },
+                  "PM_Payments": {
+                    "type": "object",
+                    "description": "Lists a set of the payment's details in subsequent lines of the API request. Required for Vendor 1099.\n",
+                    "properties": {
+                      "PM_1099CostType1": {
+                        "type": "string",
+                        "maxLength": 9,
+                        "description": "The type of 1099 reporting cost for the payment. Required for Vendor 1099.\nValid values are \"Indemnity\" or \"Expense\". Required when the PM_1099Reportable field is set to \"Y\".\n",
+                        "example": "Indemnity"
+                      },
+                      "PM_1099CostType2": {
+                        "type": "string",
+                        "maxLength": 9,
+                        "description": "The type of 1099 reporting cost for the payment. Not used in 1099 reports. Valid values are \"Indemnity\" or \"Expense\".\n",
+                        "example": "Expense"
+                      },
+                      "PM_1099CostType3": {
+                        "type": "string",
+                        "maxLength": 9,
+                        "description": "The type of 1099 reporting cost for the payment. Not used in 1099 reports. Valid values are \"Indemnity\" or \"Expense\".\n",
+                        "example": "Indemnity"
+                      },
+                      "PM_1099CostType4": {
+                        "type": "string",
+                        "maxLength": 9,
+                        "description": "The type of 1099 reporting cost for the payment. Not used in 1099 reports. Valid values are \"Indemnity\" or \"Expense\".\n",
+                        "example": "Indemnity"
+                      },
+                      "PM_1099Amount1": {
+                        "type": "string",
+                        "description": "The amount of the payment associated with the reporting type specified in PM_1099CostType1. Required for Vendor 1099.\nRequired when the PM_1099CostType1 field is populated.\n",
+                        "example": "227.37"
+                      },
+                      "PM_1099Amount2": {
+                        "type": "string",
+                        "description": "The amount of the payment associated with the reporting type specified in PM_1099CostType2.\nRequired when the PM_1099CostType2 field is populated. Not used in 1099 reports.\n",
+                        "example": "510.75"
+                      },
+                      "PM_1099Amount3": {
+                        "type": "string",
+                        "description": "The amount of the payment associated with the reporting type specified in PM_1099CostType3.\nRequired when the PM_1099CostType3 field is populated. Not used in 1099 reports.\n",
+                        "example": "510.75"
+                      },
+                      "PM_1099Amount4": {
+                        "type": "string",
+                        "description": "The amount of the payment associated with the reporting type specified in PM_1099CostType4.\nRequired when the PM_1099CostType4 field is populated. Not used in 1099 reports.\n",
+                        "example": "5000.00"
+                      },
+                      "PM_1099Reportable": {
+                        "type": "string",
+                        "maxLength": 1,
+                        "enum": [
+                          "Y",
+                          "N"
+                        ],
+                        "description": "Indicates the payment cost type for the payment is 1099 reportable. This is useful for payments to attorneys, where part of the payment can be used to pay a claim (Indemnity) and part of the payment is for the Attorney's fees (Expense).\nDefaults to \"N\". When PM_1099Reportable is \"Y\", the corresponding BUS_ReportingType1099, PM_1099CostType1, and PM_1099Amount1 fields must also contain the appropriate information for the payment.\n",
+                        "example": "Y"
+                      }
+                    }
+                  },
+                  "PM_CaseID": {
+                    "type": "string",
+                    "maxLength": 36,
+                    "description": "Hi Marley CaseID used for SMS communication. Requires ClaimsPay and Hi Marley integration.\n",
+                    "example": "673febbb-9c05-4498-9d4d-61302eadc9a3"
+                  },
+                  "PM_UserId": {
+                    "type": "string",
+                    "maxLength": 60,
+                    "description": "Unique username/id for the adjuster from the source system.\n",
+                    "example": "user0123kjsd"
+                  },
+                  "PM_User_FirstName": {
+                    "type": "string",
+                    "maxLength": 30,
+                    "description": "First name for the adjuster. This is displayed in the customer portal and in customer email. Valid RegEx: /^[ A-Za-z0-9-.' ]*$/\n",
+                    "example": "John"
+                  },
+                  "PM_User_LastName": {
+                    "type": "string",
+                    "maxLength": 30,
+                    "description": "Last name for the adjuster. This is displayed in the customer portal and in customer email. Valid RegEx: /^[ A-Za-z0-9-.' ]*$/\n",
+                    "example": "Smith"
+                  },
+                  "PM_User_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "description": "Email address for the adjuster from the claims management system. This is displayed in the customer portal and in customer email. Valid RegEx: /^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+.)+[A-Z]{2,}$/si\n",
+                    "example": "johnsmith@bigcarrier.com"
+                  },
+                  "PM_User_PhoneNumber": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Phone number for the adjuster. This is displayed in the customer portal and in customer email. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "6985231407"
+                  },
+                  "CL_ClaimNumber": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Claim number from the claim management system for this payment. This is displayed within the customer portal.\n",
+                    "example": "256314-8"
+                  },
+                  "CL_CauseofLoss": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Cause of loss. Required for \"Contact(s) and Mortgagee\" payment type.\n",
+                    "example": "Collision with motor vehicle"
+                  },
+                  "CL_DateofLoss": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date of loss. Required for \"Contact(s) and Mortgagee\" payment type. Format: YYYY-MM-DD.\n",
+                    "example": "2022-10-15"
+                  },
+                  "CL_PolicyNumber": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Policy number. Required for “Contact(s) and Mortgagee” payment type.\n",
+                    "example": "INJ456"
+                  },
+                  "CL_ClaimType": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Type of claim, typically the line of business. This field can be leveraged to disable payment methods.\n",
+                    "example": "Personal Auto"
+                  },
+                  "CL_CoverageType": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Type of coverage. This is displayed within the customer portal.\n",
+                    "example": "Collision"
+                  },
+                  "CL_ClaimUnitNumber": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Claim unit number or reserve from the claim management system to which this payment is related.\n",
+                    "example": "1234567"
+                  },
+                  "PML_State": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "The state where the claim was filed. This field can be used in conjunction with CL_ClaimType to disable payment methods by line of business.\n Two (2) for US, One Hundred (100) for International",
+                    "example": "CA"
+                  },
+                  "PCON_ContactId": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this contact from the call originating system. Required for payment types: \n- Contact(s)\n- Contact(s) and Vendor\n- Contact(s) and Mortgagee.\nThe payment token One Inc returns is tied directly to the ContactId that is sent in the CreatePaymentMaster.\n",
+                    "example": "con147"
+                  },
+                  "PCON_FirstName": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[ A-Za-z0-9-.' ]*$",
+                    "description": "First Name of Primary Contact. Required for payment types:\n- Contact(s)\n- Contact(s) and Vendor\n- Contact(s) and Mortgagee.\n",
+                    "example": "Jane"
+                  },
+                  "PCON_LastName": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Last Name of Primary Contact. Required for payment types:\n- Contact(s)\n- Contact(s) and Vendor\n- Contact(s) and Mortgagee.\nIf the contact is a business (PCONBusiness = Y) then allowed characters are: /^[a-zA-Z0-9 !@#?();:=,\\{}[]'+^$_-.&/]$/\n",
+                    "example": "Smith"
+                  },
+                  "PCON_MobilePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "This is the best contact number for the primary contact. Required for payment types:\n- Contact(s)\n- Contact(s) and Vendor\n- Contact(s) and Mortgagee.\nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "6985231407"
+                  },
+                  "PCON_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "pattern": "^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "description": "Email address of primary contact. Required for payment types:\n- Contact(s)\n- Contact(s) and Vendor\n- Contact(s) and Mortgagee.\n Valid RegEx: ^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$.\n",
+                    "example": "jsmith@emailprovider.com"
+                  },
+                  "PCON_Approval_Reqd": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "This flag indicates that approval is required from this contact before paying a vendor. \nRequired for payment types: Contact(s) and Vendor.\n",
+                    "example": "Y"
+                  },
+                  "PCON_Business": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "A flag to indicate if the payee is a business. \n\"Y\" = Payee is a company \n\"N\" = Payee is an individual. \nWhen this field is set to \"Y\", PCON_FirstName is not required.\n",
+                    "example": "Y"
+                  },
+                  "PCON_OfficePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Office Phone Number of Primary Contact. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "6985231407"
+                  },
+                  "PCON_Delivery": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "Specifies the communication method for the primary contact. \nIf this parameter is not supplied, default communication method(s) will be used.\n",
+                    "example": "Email"
+                  },
+                  "PCON_SSN": {
+                    "type": "string",
+                    "maxLength": 11,
+                    "description": "Social Security Number of Primary Contact.\n",
+                    "example": "999-99-9999"
+                  },
+                  "PCON_DOB": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date of Birth of Primary Contact. Format: YYYY-MM-DD.\n",
+                    "example": "1980-11-07"
+                  },
+                  "SCON_ContactId": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this contact from the call originating system. \nRequired only if a secondary contact is needed.\n**Note:** The payment token One Inc returns is tied directly to the ContactId that is sent in the CreatePaymentMaster.\n",
+                    "example": "con147"
+                  },
+                  "SCON_FirstName": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[ A-Za-z0-9-.' ]*$",
+                    "description": "First name of secondary contact. Required only if a secondary contact is needed.\n",
+                    "example": "Joe"
+                  },
+                  "SCON_LastName": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Last name of secondary contact. Required only if a secondary contact is needed.\nIf the contact is a business (PCONBusiness = Y) then allowed characters are: /^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+*^$_-.&/\\\\]$/.\n",
+                    "example": "Bloggs"
+                  },
+                  "SCON_MobilePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Mobile phone number of secondary contact. Required only if a secondary contact is needed.\nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "6985231407"
+                  },
+                  "SCON_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "pattern": "^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "description": "Email address of secondary contact. Required only if a secondary contact is needed.\n Valid RegEx: ^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "example": "jsmith@emailprovider.com"
+                  },
+                  "SCON_Approval_Reqd": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Required only if a secondary contact is needed and issuing a ‘Contact(s) and Vendor’ payment type.\n",
+                    "example": "Y"
+                  },
+                  "SCON_Business": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Indicates the payment is for an insured/claimant that is a business. \n\"Y\" = Payee is a company \n\"N\" = Payee is an individual. \nWhen this field is set to \"Y\": \n- SCON_FirstName is not required \n- The payment method will always be selected by the primary contact.\n",
+                    "example": "Y"
+                  },
+                  "SCON_OfficePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Office phone number of secondary contact. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "6985231407"
+                  },
+                  "SCON_Delivery": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "Specifies the communication method for the secondary contact. \nIf this parameter is not supplied, default communication method(s) will be used.\n",
+                    "example": "Email"
+                  },
+                  "SCON_SSN": {
+                    "type": "string",
+                    "maxLength": 11,
+                    "description": "Social security number of secondary contact.\n",
+                    "example": "999-99-9999"
+                  },
+                  "SCON_DOB": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date of birth of secondary contact. Format: YYYY-MM-DD.\n",
+                    "example": "1913-11-07"
+                  },
+                  "BUS_TIN": {
+                    "type": "string",
+                    "maxLength": 11,
+                    "description": "Tax identification number of business. \nRequired for Vendor, Contact(s) & Vendor. \nWhen TIN is not specified, the payment method is based on the vendor subtype and will be mailed check or mailed virtual card. \n**Note**: This is not required for \"Contact(s) and Mortgagee\" or \"Lienholder\" payments.\n",
+                    "example": "12-3456789"
+                  },
+                  "BUS_BusinessId": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "The unique identifier for this vendor from the system that originated the call. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n Optional for clients using the latest code version, but required for the legacy API.",
+                    "example": "123456789"
+                  },
+                  "BUS_Name": {
+                    "type": "string",
+                    "maxLength": 180,
+                    "pattern": "^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+*^$_-.&/\\]$",
+                    "description": "The name of the vendor. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n",
+                    "example": "World Body Shop"
+                  },
+                  "BUS_Type": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "The type of business operated by the vendor. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n",
+                    "example": "Vendor"
+                  },
+                  "BUS_SubType": {
+                    "type": "string",
+                    "maxLength": 225,
+                    "description": "Sub-type of the vendor's business. \nRequired for Vendor, Contact(s) & Vendor.\n",
+                    "example": "Auto Repair Shop"
+                  },
+                  "BUS_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "pattern": "^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "description": "Email address of business.\n",
+                    "example": "WorldShop@emailprovider.com"
+                  },
+                  "BUS_Street": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Street address of business. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n No quotation marks (\"\"), ampersands (&), or chevrons (\u003C \u003E).",
+                    "example": "123 East Street, Ste. #5"
+                  },
+                  "BUS_City": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+\\^$_-.]$",
+                    "description": "City of business. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n",
+                    "example": "Nome"
+                  },
+                  "BUS_State": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "State of business. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n Two (2) for US, One Hundred (100) for International",
+                    "example": "AK"
+                  },
+                  "BUS_Zipcode": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "A full list of supported country codes and corresponding postal RegEX can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nZip code of business. \nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n",
+                    "example": "12345"
+                  },
+                  "BUS_Country": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "2- and 3-letter country codes are supported. A full list of supported country codes can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nCountry of business.\nRequired for Vendor, Contact(s) & Vendor, Contact(s) & Mortgagee, Lienholder.\n",
+                    "example": "USA"
+                  },
+                  "BUS_OfficePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Office phone number of business. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "7548651280"
+                  },
+                  "BUS_Fax": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Fax Number of business. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "4445844542"
+                  },
+                  "BUS_TINType": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "description": "Type of identification number. \nOptions include \"TIN\", \"FEIN\", \"TIBN\", \"SSN\", or \"EIN\".\n",
+                    "example": "FEIN"
+                  },
+                  "BUS_Reportable1099": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "Reportable flag for 1099 reporting. \nDefault is \"N\".\n",
+                    "example": "N"
+                  },
+                  "BUS_ReportingType1099": {
+                    "type": "string",
+                    "maxLength": 4,
+                    "description": "1099 reporting type. \nThis parameter determines the box on the 1099 where the vendor's payment sum is placed.\n",
+                    "example": "Medi"
+                  },
+                  "PM_TINOverride": {
+                    "type": "string",
+                    "maxLength": 1,
+                    "description": "There are instances where a TIN is not available. When PM_PaymentType is \"Vendor\" or \"Contact(s) and Vendor\", this parameter allows the mandatory TIN field to be bypassed.\n**Note:** If PM_TINOverride ='Y', then PMETHOD must be 'Check' for PM_PaymentType 'Vendor'.",
+                    "example": "N"
+                  },
+                  "PA_Street": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Street address of home property.\nRequired for Contact(s) and Mortgagee payment type.\n No quotation marks (\"\") ampersands (&) or chevrons (\u003C \u003E).",
+                    "example": "56789 Sunshine Terrace"
+                  },
+                  "PA_City": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+\\^$_-.]$",
+                    "description": "City of home property address. Required for Contact(s) and Mortgagee.",
+                    "example": "Burlington"
+                  },
+                  "PA_State": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "State of home property address. Required for Contact(s) and Mortgagee.\n Two (2) for US, One Hundred (100) for International",
+                    "example": "VT"
+                  },
+                  "PA_Zipcode": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "A full list of supported country codes and corresponding postal RegEX can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nZip code of home property address. Required for Contact(s) and Mortgagee.",
+                    "example": "12345"
+                  },
+                  "PA_Country": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "2- and 3-letter country codes are supported. A full list of supported country codes can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nCountry of home property address. Required for Contact(s) and Mortgagee.",
+                    "example": "USA"
+                  },
+                  "PMA_MailTo": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Payment recipient’s name. PMA_MailTo should contain only the name of the entity or person that is the mailing recipient (i.e. business name or the individual name). No address data should be placed here. No line feeds, form feeds, or tabs. No new line (\\n).",
+                    "example": "Samson Simpson"
+                  },
+                  "PMA_Street": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Street address of home. PMA_Street should contain only the street address data. No mailing recipient information should be placed here, such as the individual or company name. No line feeds, form feeds, or tabs. No new line (\\n), quotation marks (\"), ampersands (&), or chevrons (\u003C \u003E).",
+                    "example": "56789 Sunshine Terrace"
+                  },
+                  "PMA_City": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+\\^$_-.]$",
+                    "description": "City of home property used for mailing payments. No line feeds, form feeds, or tabs.",
+                    "example": "Austin"
+                  },
+                  "PMA_State": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "State of home property used for mailing payments.\n Two (2) for US, One Hundred (100) for International",
+                    "example": "TX"
+                  },
+                  "PMA_Zipcode": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "A full list of supported country codes and corresponding postal RegEX can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nZip code of home property address used for mailing payments.",
+                    "example": "12345"
+                  },
+                  "PMA_Country": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Country of home property address used for mailing payments. 2- and 3-letter country codes are supported. A full list of supported country codes can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \nPayments cannot be sent to a prohibited or sanctioned country.",
+                    "example": "US"
+                  },
+                  "RMA_MailTo": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "The return company’s name. Should contain only the name of the entity or person that is the mailing recipient (i.e. business name or the individual name). No address data should be placed here. No line feeds, form feeds, or tabs. No new line (\\n).",
+                    "example": "ONE INC"
+                  },
+                  "RMA_Street": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "The street address of mailing address where the payment will be sent. Should contain only the street address data. No mailing recipient information should be placed here, such as the insurance company name. No line feeds, form feeds, or tabs. No new line (\\n), quotation marks (\"), ampersands (&), or chevrons (\u003C \u003E).",
+                    "example": "620 COOLIDGE DR ST 200"
+                  },
+                  "RMA_City": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "pattern": "^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+\\^$_-.]$",
+                    "description": "The city of the mailing address where the payment will be returned. No line feeds, form feeds, or tabs. \n Valid RegEx: ^[a-zA-Z0-9 !@#?();:\u003E=\u003C,{}[]'+\\^$_-.]$",
+                    "example": "FOLSOM"
+                  },
+                  "RMA_State": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "The state of the mailing address where the payment will be returned.\n Two (2) for US, One Hundred (100) for International",
+                    "example": "CA"
+                  },
+                  "RMA_Zipcode": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "description": "The zip code of the mailing address where the payment will be returned. For US addresses, the zip code should be 5- and 9-digit zip codes. \nA full list of supported country codes and corresponding postal RegEX can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes).",
+                    "example": "95630-3183"
+                  },
+                  "RMA_Country": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "The country portion of the mailing address where the payment will be returned. 2- and 3-letter country codes are supported. A full list of supported country codes can be found [here](https://dev.oneinc.com/outbound-payments/docs/how-do-i-mail-a-check-internationally#country-and-postal-codes). \n If a 2-character country code is sent, One Inc converts and stores it as the 3-character country code. \nPayments cannot be sent to a prohibited or sanctioned country. \n Current sanctions can be found in the Office of Foreign Assets Control [website](https://www.treasury.gov/resource-center/sanctions/sdn-list/Pages/default.aspx).",
+                    "example": "US, USA"
+                  },
+                  "PMETHOD": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Payment Method to process this payment. Required for payment types:\n- Contact(s)\n- Contact(s) and Mortgagee \n\n**Note:**\n- When PM_Payment Type is \"Contact(s)\", valid value is: \"Let Customer Pickup\" or \"Check\" \n- When PM_Payment Type is \"Contact(s) and Mortgagee\", valid value is: \"Let Customer Pickup\" or \"Check\" \n- When the PM_Payment Type is \"Vendor\", \"Contact(s) and Vendor\", or \"Lienholder\", valid values are either empty (\"\"), \"Check\", or parameter may be omitted \n- If an invalid value is passed, the request will result in an Error Code that the payment method is not valid.\n",
+                    "example": "Let Customer Pickup",
+                    "enum": [
+                      "Let Customer Pickup",
+                      "Check"
+                    ]
+                  },
+                  "PMETHOD_Stored": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Unique identifier to be sent in for supplemental payments.\nThis is returned in the field named PM_MethodID in the webhook.\nOnly Direct Deposit, Debit Card, Venmo, Paypal, and Prepaid Card stored payment methods can be used for supplemental payments.\n",
+                    "example": "hkjasdh-asdhadsas-adsadsa-adsas"
+                  },
+                  "ProcessOneToken": {
+                    "type": "string",
+                    "maxLength": 36,
+                    "description": "Unique identifier to be sent for payments to be issued to a token generated from a preselect request only. Required for preselect payments.\nThe token must be valid for the PCON_ContactId, and PCON_ContactId must match the value passed in the preselect request as the ConsumerDetails.ExternalId.\n",
+                    "example": "81867517-7790-483a-8808-e512f37a8a8d"
+                  },
+                  "PM_Additional_Text_1": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Invoice Number displayed on check, vendor remittance, and within vendor portal.\n",
+                    "example": "INV5201"
+                  },
+                  "PM_Additional_Text_2": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Insured Name displayed on check and vendor remittance.\n",
+                    "example": "David Christopher"
+                  },
+                  "PM_Additional_Text_3": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Check Payee Name displayed on the check. Required when One Inc is printing checks. \n If there are multiple payees on the check, there needs to be an “and” or “&” between the names.\n Used for the \"Pay to the order of\" field on checks.",
+                    "example": [
+                      "Davy Jones",
+                      "Davy Jones and Blackbeard the Pirate",
+                      "John Smith & Mary Smith & Caliber Collision"
+                    ]
+                  },
+                  "PM_Additional_Text_4": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Claimant Name displayed on check and vendor remittance.\n",
+                    "example": "ABC Assurance Ltd"
+                  },
+                  "PM_Additional_Text_5": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Payment Description displayed on check stub and vendor remittance.\n",
+                    "example": "Paid for the Accidental Loss"
+                  },
+                  "PM_Additional_Text_6": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "format": "date",
+                    "description": "Service Start Date displayed on check.\n",
+                    "example": "2021-05-07"
+                  },
+                  "PM_Additional_Text_7": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Reserved for internal use. TransactionID Information.\n",
+                    "readOnly": true
+                  },
+                  "PM_Additional_Text_8": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Reserved for internal use. PMA_MailTo\n",
+                    "readOnly": true
+                  },
+                  "PM_Additional_Text_9": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "To Pay For (Memo) displayed on check.\n",
+                    "example": "David Christopher"
+                  },
+                  "PM_Additional_Text_10": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "format": "date",
+                    "description": "Service End Date displayed on check.\n",
+                    "example": "2021-05-07"
+                  },
+                  "PM_Additional_Text_11": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Agency displayed on check.\n"
+                  },
+                  "PM_Additional_Text_12": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Reserved for internal use. PWS DebitZipCode.\n",
+                    "readOnly": true
+                  },
+                  "PM_Additional_Text_13": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Additional Information from Carrier that can be used for reporting or other needs.\n"
+                  },
+                  "PM_Additional_Text_14": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Additional Information from Carrier that can be used for reporting or other needs.\n"
+                  },
+                  "PM_Additional_Text_15": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Additional Information from Carrier that can be used for reporting or other needs.\n"
+                  },
+                  "PM_Additional_Text_16": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "description": "Source system indicator. This is used for indicating the source system that initiated the transaction (e.g., your policy system, billing system, claims system). You should pass the appropriate value based on the brand of the system used to initiate the transaction (e.g., Guidewire, Duck Creek, etc.).\n",
+                    "example": "Guidewire"
+                  }
+                }
+              },
+              "examples": {
+                "vendorPayment": {
+                  "summary": "Vendor Payment",
+                  "value": {
+                    "PM_CarrierId": "Test",
+                    "PM_PaymentID": "110420240854",
+                    "PM_PaymentType": "Vendor",
+                    "PM_Amount": "724.75",
+                    "PM_UserId": "OIAdjuster",
+                    "PM_User_FirstName": "John",
+                    "PM_User_LastName": "Doe",
+                    "PM_User_EmailAddress": "john@carrier.com",
+                    "CL_ClaimNumber": "052017",
+                    "BUS_BusinessId": "BusID01",
+                    "BUS_Name": "One Inc Consultant",
+                    "BUS_Type": "Vendor",
+                    "BUS_SubType": "Person",
+                    "BUS_TINType": "TIN",
+                    "BUS_TIN": "202410019",
+                    "BUS_OfficePhone": "1234567891",
+                    "BUS_EmailAddress": "test@oneinc.com",
+                    "BUS_Street": "123 Main St Suite#204",
+                    "BUS_City": "Folsom",
+                    "BUS_State": "CA",
+                    "BUS_Zipcode": "95630",
+                    "BUS_Country": "USA",
+                    "PMA_Street": "123 Main St",
+                    "PMA_City": "Folsom",
+                    "PMA_State": "CA",
+                    "PMA_Zipcode": "95630",
+                    "PMA_Country": "USA",
+                    "PMA_MailTo": "James Smith",
+                    "PM_Additional_Text_1": "Invoice-124555",
+                    "PM_Additional_Text_2": "Insured Name - James Smith",
+                    "PM_Additional_Text_3": "Check Payee Name - James Smith",
+                    "PM_Additional_Text_4": "Claimant Name - James Smith",
+                    "PM_Additional_Text_5": "Description - Repair Cost",
+                    "PM_Additional_Text_6": "Service Start Date",
+                    "PM_Additional_Text_9": "To Pay for",
+                    "PM_Additional_Text_10": "Service End Date",
+                    "PM_Additional_Text_13": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_14": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_15": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_16": "INHO",
+                    "PM_ENV": "UAT"
+                  }
+                },
+                "contactsVendorPayment": {
+                  "summary": "Contacts & Vendor Payment",
+                  "value": {
+                    "PM_CarrierId": "CarrierA",
+                    "PM_PaymentID": "PMTPMM001PL06666123",
+                    "PM_PaymentType": "Contact(s) and Vendor",
+                    "PM_Amount": "724.75",
+                    "PM_UserId": "OIAdjuster",
+                    "PM_User_FirstName": "John",
+                    "PM_User_LastName": "Doe",
+                    "PM_User_EmailAddress": "john@carrier.com",
+                    "CL_ClaimNumber": "052017",
+                    "PCON_ContactId": "PCON121503",
+                    "PCON_FirstName": "James",
+                    "PCON_LastName": "Smith",
+                    "PCON_EmailAddress": "james@oneinc.com",
+                    "PCON_MobilePhone": "8051231234",
+                    "PCON_Approval_Reqd": "Y",
+                    "BUS_BusinessId": "abc:01192",
+                    "BUS_Name": "Auto Rental Ltd",
+                    "BUS_Type": "Vendor",
+                    "BUS_SubType": "Company",
+                    "BUS_TINType": "TIN",
+                    "BUS_TIN": "874011118",
+                    "BUS_OfficePhone": "8884875890",
+                    "BUS_EmailAddress": "test@oneinc.com",
+                    "BUS_Street": "123 Main St",
+                    "BUS_City": "Simi Valley",
+                    "BUS_State": "CA",
+                    "BUS_Zipcode": "93063",
+                    "BUS_Country": "USA",
+                    "PMA_Street": "123 Main St",
+                    "PMA_City": "Folsom",
+                    "PMA_State": "CA",
+                    "PMA_Zipcode": "95630",
+                    "PMA_Country": "USA",
+                    "PMA_MailTo": "James Smith",
+                    "PM_Additional_Text_1": "Invoice-124555",
+                    "PM_Additional_Text_2": "Insured Name - James Smith",
+                    "PM_Additional_Text_3": "Check Payee Name - James Smith",
+                    "PM_Additional_Text_4": "Claimant Name - James Smith",
+                    "PM_Additional_Text_5": "Description - Repair Cost",
+                    "PM_Additional_Text_6": "Service Start Date",
+                    "PM_Additional_Text_9": "To Pay for",
+                    "PM_Additional_Text_10": "Service End Date",
+                    "PM_Additional_Text_13": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_14": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_15": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_16": "INHO",
+                    "PM_ENV": "UAT"
+                  }
+                },
+                "singlePartyContactPayment": {
+                  "summary": "Single Party Contact Payment",
+                  "value": {
+                    "PM_CarrierId": "Test",
+                    "PM_PaymentID": "110420240854",
+                    "PM_PaymentType": "Contact(s)",
+                    "PM_Amount": "724.75",
+                    "PM_UserId": "OIAdjuster",
+                    "PM_User_FirstName": "John",
+                    "PM_User_LastName": "Doe",
+                    "PM_User_EmailAddress": "john@carrier.com",
+                    "CL_ClaimNumber": "052017",
+                    "PMA_Street": "123 Main St",
+                    "PMA_City": "Folsom",
+                    "PMA_State": "CA",
+                    "PMA_Zipcode": "95630",
+                    "PMA_Country": "USA",
+                    "PMA_MailTo": "James Smith",
+                    "PM_Additional_Text_1": "Invoice-124555",
+                    "PM_Additional_Text_2": "Insured Name - James Smith",
+                    "PM_Additional_Text_3": "Check Payee Names - James Smith and Joe Bloggs",
+                    "PM_Additional_Text_4": "Claimant Name - James Smith",
+                    "PM_Additional_Text_5": "Description - Repair Cost",
+                    "PM_Additional_Text_6": "Service Start Date",
+                    "PM_Additional_Text_9": "To Pay for",
+                    "PM_Additional_Text_10": "Service End Date",
+                    "PM_Additional_Text_13": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_14": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_15": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_16": "INHO",
+                    "PM_ENV": "UAT",
+                    "PM_Check_Fraud_Language": "A person who files a claim with intent to defraud, or helps commit a fraud against an insurer, is guilty of a crime.",
+                    "PM_User_PhoneNumber": "2103451234",
+                    "PCON_ContactId": "con123",
+                    "PCON_FirstName": "James",
+                    "PCON_LastName": "Smith",
+                    "PCON_MobilePhone": "6985231407",
+                    "PCON_EmailAddress": "jsmith@emailprovider.com",
+                    "PCON_Business": "N",
+                    "PMETHOD": "Let Customer Pickup"
+                  }
+                },
+                "multipartyContactPayment": {
+                  "summary": "MultiParty Contact Payment",
+                  "value": {
+                    "PM_CarrierId": "Test",
+                    "PM_PaymentID": "110420240854",
+                    "PM_PaymentType": "Contact(s)",
+                    "PM_Amount": "724.75",
+                    "PM_UserId": "OIAdjuster",
+                    "PM_User_FirstName": "John",
+                    "PM_User_LastName": "Doe",
+                    "PM_User_EmailAddress": "john@carrier.com",
+                    "CL_ClaimNumber": "052017",
+                    "PMA_Street": "123 Main St",
+                    "PMA_City": "Folsom",
+                    "PMA_State": "CA",
+                    "PMA_Zipcode": "95630",
+                    "PMA_Country": "USA",
+                    "PMA_MailTo": "James Smith",
+                    "PM_Additional_Text_1": "Invoice-124555",
+                    "PM_Additional_Text_2": "Insured Name - James Smith",
+                    "PM_Additional_Text_3": "Check Payee Names - James Smith and Joe Bloggs",
+                    "PM_Additional_Text_4": "Claimant Name - James Smith",
+                    "PM_Additional_Text_5": "Description - Repair Cost",
+                    "PM_Additional_Text_6": "Service Start Date",
+                    "PM_Additional_Text_9": "To Pay for",
+                    "PM_Additional_Text_10": "Service End Date",
+                    "PM_Additional_Text_13": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_14": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_15": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_16": "INHO",
+                    "PM_ENV": "UAT",
+                    "SCON_MobilePhone": "6985231407",
+                    "PM_Check_Fraud_Language": "A person who files a claim with intent to defraud, or helps commit a fraud against an insurer, is guilty of a crime.",
+                    "PM_User_PhoneNumber": "2103451234",
+                    "PCON_ContactId": "con123",
+                    "PCON_FirstName": "James",
+                    "PCON_LastName": "Smith",
+                    "PCON_MobilePhone": "6985231407",
+                    "PCON_EmailAddress": "jsmith@emailprovider.com",
+                    "PCON_Business": "N",
+                    "SCON_ContactId": "con234",
+                    "SCON_FirstName": "Joe",
+                    "SCON_LastName": "Bloggs",
+                    "SCON_EmailAddress": "jbloggs@emailprovider.com",
+                    "SCON_Business": "N",
+                    "PMETHOD": "Let Customer Pickup"
+                  }
+                },
+                "contactMortgageePayment": {
+                  "summary": "Contacts & Mortgagee Payment",
+                  "value": {
+                    "PM_CarrierId": "CarrierA",
+                    "PM_PaymentID": "PMTPMM001PL06666123",
+                    "PM_PaymentType": "Contact(s) and Mortgagee",
+                    "PM_Amount": "724.75",
+                    "PM_UserId": "OIAdjuster",
+                    "PM_User_FirstName": "John",
+                    "PM_User_LastName": "Doe",
+                    "PM_User_EmailAddress": "john@carrier.com",
+                    "CL_ClaimNumber": "052017",
+                    "PCON_ContactId": "PCON121503",
+                    "PCON_FirstName": "James",
+                    "PCON_LastName": "Smith",
+                    "PCON_EmailAddress": "james@oneinc.com",
+                    "PCON_MobilePhone": "8051231234",
+                    "BUS_BusinessId": "123456789",
+                    "BUS_Name": "Test Mortgagee",
+                    "BUS_Type": "Mortgagee",
+                    "BUS_OfficePhone": "8884875890",
+                    "BUS_Street": "123 Main St",
+                    "BUS_City": "Simi Valley",
+                    "BUS_State": "CA",
+                    "BUS_Zipcode": "93063",
+                    "BUS_Country": "USA",
+                    "PMA_Street": "123 Main St",
+                    "PMA_City": "Folsom",
+                    "PMA_State": "CA",
+                    "PMA_Zipcode": "95630",
+                    "PMA_Country": "USA",
+                    "PMA_MailTo": "James Smith",
+                    "PM_Additional_Text_1": "Invoice-124555",
+                    "PM_Additional_Text_2": "Insured Name - James Smith",
+                    "PM_Additional_Text_3": "Check Payee Names - James Smith and Test Mortgagee",
+                    "PM_Additional_Text_4": "Claimant Name - James Smith",
+                    "PM_Additional_Text_5": "Description - Repair Cost",
+                    "PM_Additional_Text_6": "Service Start Date",
+                    "PM_Additional_Text_9": "To Pay for",
+                    "PM_Additional_Text_10": "Service End Date",
+                    "PM_Additional_Text_13": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_14": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_15": "Addl Text - Carrier Defined",
+                    "PM_Additional_Text_16": "INHO",
+                    "PM_ENV": "UAT",
+                    "PM_RequestReason": "Loss Payment",
+                    "PM_LoanAccountNumber": "LN123456",
+                    "PM_User_PhoneNumber": "6985231407",
+                    "CL_CauseofLoss": "Fire",
+                    "CL_DateofLoss": "2022-10-15",
+                    "CL_PolicyNumber": "INJ456",
+                    "PA_Street": "56789 Sunshine Terrace",
+                    "PA_City": "Burlington",
+                    "PA_State": "VT",
+                    "PA_Zipcode": "12345",
+                    "PA_Country": "USA",
+                    "PMETHOD": "Let Customer Pickup"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-CreatePaymentMaster"
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/paymentMaster/stop": {
+      "post": {
+        "summary": "Stop Payment",
+        "description": "The StopPayment API is used to stop a payment in ClaimsPay.",
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "StopPayment",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "PM_PaymentID"
+                ],
+                "properties": {
+                  "PM_PaymentID": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this payment from the call originating system; no special characters are allowed.\n",
+                    "example": "1234567890"
+                  },
+                  "PM_StopReason": {
+                    "type": "string",
+                    "description": "Reason for stopping the payment. If passed, there is a minimum length of 5 characters.\n",
+                    "minLength": 5,
+                    "example": "Duplicate payment"
+                  }
+                }
+              },
+              "example": "{\n  \"PM_PaymentID\": \"PMTPMM001PL06666100127012\"\n}\n"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "PM_PaymentID": {
+                      "type": "string",
+                      "description": "Unique identifier for this payment from the call originating system.",
+                      "example": "1234567890"
+                    },
+                    "PM_Status": {
+                      "type": "string",
+                      "description": "Current status of the payment. Possible values are: Pending Approval, Error, Issued, Success, Stopped, Stop Pending, Cancelled.\n",
+                      "example": "Stopped"
+                    },
+                    "PM_AmountUnloaded": {
+                      "type": "number",
+                      "format": "decimal",
+                      "description": "Payment amount unloaded.",
+                      "example": 1000
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction status. Possible values are\n- Success\n- Error \n",
+                      "example": "Success"
+                    },
+                    "Error_Code": {
+                      "type": "string",
+                      "description": "Code denoting the type of error.",
+                      "example": "45"
+                    },
+                    "Error_Message": {
+                      "type": "string",
+                      "description": "Detailed error message.",
+                      "example": "Invalid payment ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/profile": {
+      "put": {
+        "summary": "Update Profile",
+        "description": "Updates the insured/claimants information associated with a payment",
+        "tags": [
+          "Profiles"
+        ],
+        "operationId": "UpdateProfile",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Data for Updating Profile",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PM_PaymentID": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this payment from the call originating system. This is the same as PM_CR_PaymentID that we return in the webhook, and is also the same as CRTrackingNumber in the payment feedback file.",
+                    "example": "PMTPMM001PL06666100127012"
+                  },
+                  "PCON_ContactId": {
+                    "maxLength": 50,
+                    "type": "string",
+                    "description": "Unique identifier for the primary contact; conditional.\n",
+                    "example": "PCON121503"
+                  },
+                  "PCON_MobilePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "This is the best contact number for the primary contact. Required for payments that require approval such as Multiparty payments.\nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n ",
+                    "example": "8051231234"
+                  },
+                  "PCON_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "pattern": "^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "description": "Email Address of Primary Contact; required for payments that require approval such as Multiparty payments.\n Valid RegEx: ^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$ \n",
+                    "example": "john@oneinc.com"
+                  },
+                  "SCON_ContactId": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for the secondary contact; conditional.\n",
+                    "example": "SCON121503"
+                  },
+                  "SCON_MobilePhone": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "Mobile Phone Number of Secondary Contact; required for payments that require approval such as Multiparty payments. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "example": "8051234321"
+                  },
+                  "SCON_EmailAddress": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "pattern": "^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$",
+                    "description": "Email Address of Secondary Contact; required for payments that require approval such as Multiparty payments.\n Valid RegEx: ^[A-Z0-9._'%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,}$ \n",
+                    "example": "secondary@example.com"
+                  }
+                },
+                "required": [
+                  "PM_PaymentID"
+                ]
+              },
+              "example": "{\n  \"PM_PaymentID\": \"PMTPMM001PL06666100127012\",\n  \"PCON_ContactId\": \"PCON121503\",\n  \"PCON_EmailAddress\": \"john@oneinc.com\",\n  \"PCON_MobilePhone\" : \"8051231234\"\n}\n"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "PM_PaymentID": {
+                      "type": "string",
+                      "description": "Unique identifier for this payment from the call originating system",
+                      "maxLength": 50
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction status. Possible values are: Success, Error."
+                    },
+                    "Error_Code": {
+                      "type": "string",
+                      "description": "Code denoting the type of error",
+                      "maxLength": 50
+                    },
+                    "Error_Message": {
+                      "type": "string",
+                      "description": "Detailed error message",
+                      "maxLength": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/email/resend": {
+      "post": {
+        "summary": "Resend Email",
+        "description": "The ResendEmail API is used to resend the payment pickup/approval notifications (emails and SMS) to the Insured/Claimant or the approvers.",
+        "tags": [
+          "Payments"
+        ],
+        "operationId": "ResendEmail",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PM_PaymentID": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this payment from the call originating system.",
+                    "example": "PMTPMM001PL06666100127012"
+                  }
+                },
+                "required": [
+                  "PM_PaymentID"
+                ]
+              },
+              "example": "{\n  \"PM_PaymentID\": \"PMTPMM001PL06666100127012\"\n}\n"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "PM_PaymentID": {
+                      "type": "string",
+                      "description": "Unique identifier for the payment from the call originating system.",
+                      "example": "PMTPMM001PL06666100127012"
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction status. Possible values are - Success, Error.",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/vendor": {
+      "post": {
+        "summary": "Create Vendor",
+        "description": "Creates a vendor without an associated payment.",
+        "tags": [
+          "Vendors"
+        ],
+        "operationId": "CreateVendor",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "BUS_BusinessId",
+                  "BUS_Type",
+                  "BUS_SubType",
+                  "BUS_Name",
+                  "BUS_TIN",
+                  "BUS_Street",
+                  "BUS_City",
+                  "BUS_State",
+                  "BUS_Zipcode",
+                  "BUS_Country",
+                  "BUS_Status"
+                ],
+                "properties": {
+                  "BUS_BusinessId": {
+                    "type": "string",
+                    "description": "Unique identifier for this vendor from the call originating system.",
+                    "maxLength": 50,
+                    "example": "BUS123"
+                  },
+                  "BUS_Type": {
+                    "type": "string",
+                    "description": "Type of Business. Possible values are:\n- Vendor\n- Lienholder (Use for “Lienholder” payment type requests.)\n- Mortgagee (Use for “Contact(s) and Mortgagee” payment type requests.)\n",
+                    "maxLength": 100,
+                    "example": "Vendor"
+                  },
+                  "BUS_SubType": {
+                    "type": "string",
+                    "description": "Sub Type of Business. Required only when BUS_Type is Vendor.",
+                    "maxLength": 255,
+                    "example": "Medical Provider"
+                  },
+                  "BUS_Name": {
+                    "type": "string",
+                    "description": "Vendor Name. Valid RegEx: /^[a-zA-Z0-9!@#?()\\;\\:\\\u003E\\=\\\u003C\\,\\{\\}\\[\\]\\\"\\'\\+\\*\\^\\$\\_\\-\\.\\&]*$/\n",
+                    "maxLength": 180,
+                    "example": "ABC Body Shop Inc."
+                  },
+                  "BUS_TIN": {
+                    "type": "string",
+                    "description": "Tax identification number of the business. \n**Note**: Numeric characters only, no hyphens or special characters",
+                    "maxLength": 11,
+                    "example": "456231234"
+                  },
+                  "BUS_TINType": {
+                    "type": "string",
+                    "description": "Type of identification number.",
+                    "maxLength": 100,
+                    "enum": [
+                      "TIN",
+                      "FEIN",
+                      "TIBN",
+                      "SSN",
+                      "EIN"
+                    ],
+                    "example": "TIN"
+                  },
+                  "BUS_DBAName": {
+                    "type": "string",
+                    "description": "Vendor Name - Doing Business As.",
+                    "maxLength": 180,
+                    "example": "ABC Body Shop"
+                  },
+                  "BUS_EmailAddress": {
+                    "type": "string",
+                    "description": "Email Address of business.",
+                    "maxLength": 254,
+                    "example": "abc@abcshop.com"
+                  },
+                  "BUS_OfficePhone": {
+                    "type": "string",
+                    "description": "Office phone number of business. \nSupported formats include \"##########\", \"###-###-####\". \nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "maxLength": 100,
+                    "example": "7548651280"
+                  },
+                  "BUS_Fax": {
+                    "type": "string",
+                    "description": "Fax Number of business. \nSupported formats include \"##########\", \"###-###-####\".\nCannot have parentheses \"(###)#######\", \"(###)-###-####\".\n",
+                    "maxLength": 100,
+                    "example": "4445844542"
+                  },
+                  "BUS_Street": {
+                    "type": "string",
+                    "description": "Street Address of the business.",
+                    "maxLength": 255,
+                    "example": "123 Main St Suite#204"
+                  },
+                  "BUS_City": {
+                    "type": "string",
+                    "description": "City. Valid RegEx: /^[a-zA-Z0-9!@#?();:\u003E=\u003C,{}[]\"'+*^$_-.]*$/\n",
+                    "maxLength": 100,
+                    "example": "Austin"
+                  },
+                  "BUS_State": {
+                    "type": "string",
+                    "description": "State.\n Two (2) for US, One Hundred (100) for International",
+                    "maxLength": 100,
+                    "example": "TX"
+                  },
+                  "BUS_Zipcode": {
+                    "type": "string",
+                    "description": "ZIP code. Valid RegEx: /^(([0-9]{5})|([0-9]{5}[-][0-9]{4}))$/\n **Note:** Must be 5 digits or 5+4 format (12345-6789)",
+                    "maxLength": 20,
+                    "example": "12345"
+                  },
+                  "BUS_Country": {
+                    "type": "string",
+                    "description": "Country.",
+                    "maxLength": 255,
+                    "example": "USA"
+                  },
+                  "BUS_Status": {
+                    "type": "string",
+                    "description": "Current Status of the Business.",
+                    "enum": [
+                      "Active",
+                      "Inactive"
+                    ],
+                    "example": "Active"
+                  },
+                  "BUS_Reportable1099": {
+                    "type": "string",
+                    "description": "1099 Reportable flag. Possible values: Y, N.",
+                    "maxLength": 1,
+                    "enum": [
+                      "Y",
+                      "N"
+                    ],
+                    "example": "Y"
+                  },
+                  "BUS_ReportingType1099": {
+                    "type": "string",
+                    "description": "1099 Reporting Type.\n**Note**: Required if BUS_1099Reportable = Y",
+                    "maxLength": 4,
+                    "enum": [
+                      "NEC",
+                      "MISC",
+                      "DIV",
+                      "INT"
+                    ],
+                    "example": "NEC"
+                  }
+                }
+              },
+              "example": "{\n  \"BUS_BusinessId\": \"VEN123\",\n  \"BUS_Type\": \"Vendor\",\n  \"BUS_SubType\": \"Auto Repair Shop\",\n  \"BUS_Name\": \"ABC Body Shop Inc\",\n  \"BUS_TIN\": \"456231234\",\n  \"BUS_TINType\": \"TIN\",\n  \"BUS_DBAName\": \"ABC Body Shop Inc\",\n  \"BUS_EmailAddress\": \"abc@abcshop.com\",\n  \"BUS_OfficePhone\": \"4081231236\",\n  \"BUS_Fax\": \"4081231237\",\n  \"BUS_Street\": \"123 Main St Suite#204\",\n  \"BUS_City\": \"Austin\",\n  \"BUS_State\": \"TX\",\n  \"BUS_Zipcode\": \"12345\",\n  \"BUS_Country\": \"USA\",\n  \"BUS_Status\": \"Active\"\n}\n"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "BUS_BusinessId": {
+                      "type": "string",
+                      "description": "Unique identifier for this vendor from the call originating system.",
+                      "maxLength": 50
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction Status. Possible values are: \n- Success \n- Error\n"
+                    },
+                    "Error_Code": {
+                      "type": "string",
+                      "description": "Code denoting the type of error. Present only when an error has occurred.",
+                      "maxLength": 50,
+                      "nullable": true
+                    },
+                    "Error_Message": {
+                      "type": "string",
+                      "description": "Detailed error message. Present only when an error has occurred.",
+                      "maxLength": 200,
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    },
+    "/{ClientKey}/claimsPay/document": {
+      "post": {
+        "summary": "Attach Document",
+        "description": "This API is used for attaching documents in the ClaimsPay system",
+        "tags": [
+          "Documents"
+        ],
+        "operationId": "AttachDocument",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Data that is needed to attach document",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "PM_PaymentID",
+                  "PM_Filename",
+                  "PM_Document"
+                ],
+                "properties": {
+                  "PM_PaymentID": {
+                    "type": "string",
+                    "maxLength": 50,
+                    "description": "Unique identifier for this payment from the call originating system; no special characters are allowed.",
+                    "example": "1234567890"
+                  },
+                  "PM_Filename": {
+                    "type": "string",
+                    "description": "The file name cannot contain any special characters (Invalid RegEx: /#&:\u003E\u003C,\"*~/). Include file extension. It is recommended that the length of the filename be less than 25 characters for display and eligibility purposes in the Customer Portal.\n",
+                    "example": "EOB.pdf"
+                  },
+                  "PM_Document": {
+                    "type": "string",
+                    "format": "byte",
+                    "description": "Base64 encoded document data.",
+                    "example": "dGVzdCBkb2N1bWVudCBkYXRh"
+                  }
+                }
+              },
+              "example": "{\n    \"PM_PaymentID\": \"PMTPMM001PL06666100127012\",\n    \"PM_Filename\": \"EOB.pdf\",\n    \"PM_Document\": \"ZXhhbXBsZQ==\"\n}\n"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "PM_PaymentID": {
+                      "type": "string",
+                      "description": "Unique identifier for this payment from the call originating system",
+                      "maxLength": 50
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction status. Possible values are: Success, Error."
+                    },
+                    "Error_Code": {
+                      "type": "string",
+                      "description": "Code denoting the type of error",
+                      "maxLength": 50
+                    },
+                    "Error_Message": {
+                      "type": "string",
+                      "description": "Detailed error message",
+                      "maxLength": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Document",
+        "description": "Retrieve a check image to be printed locally",
+        "tags": [
+          "Documents"
+        ],
+        "operationId": "GetDocument",
+        "security": [
+          {
+            "bearer_auth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "PM_PaymentID",
+            "in": "query",
+            "description": "ID of payment to return",
+            "required": true,
+            "example": "PM001122334412611",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/clientKeyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "PM_PaymentID": {
+                      "type": "string",
+                      "maxLength": 50,
+                      "description": "Unique identifier for this payment from the call originating system; no special characters are allowed.",
+                      "example": "PMTPMM001PL06666100127012"
+                    },
+                    "PM_Filename": {
+                      "type": "string",
+                      "description": "Document file name. Include file extension (e.g., EOB.pdf). The filename should be less than 25 characters for display and eligibility purposes.\n",
+                      "example": "EOB.pdf"
+                    },
+                    "PM_Document": {
+                      "type": "string",
+                      "description": "The base64 encoded check image (conditional field).",
+                      "example": "dGVzdCBkb2N1bWVudCBkYXRh"
+                    },
+                    "PM_Document_Link": {
+                      "type": "string",
+                      "description": "The hyperlink to the check as a PDF (conditional field).",
+                      "example": "https://example.com/document.pdf"
+                    },
+                    "Status": {
+                      "type": "string",
+                      "description": "Transaction status. Possible values - Success, Error.",
+                      "example": "Success"
+                    },
+                    "Error_Code": {
+                      "type": "string",
+                      "maxLength": 50,
+                      "description": "Code denoting the type of error. Possible values - 1, 2, 4, 5, 6, 45",
+                      "example": "1"
+                    },
+                    "Error_Message": {
+                      "type": "string",
+                      "maxLength": 200,
+                      "description": "Detailed error message.",
+                      "example": "Document not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/401-Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/403-Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/500-InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "auth": {
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          },
+          "grant_type": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "description": "Error response",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Message": {
+            "description": "Problem description",
+            "type": "string"
+          }
+        }
+      },
+      "BadRequestResponse": {
+        "description": "Returned when empty request body received",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Message": {
+            "type": "string",
+            "description": "Problem description",
+            "example": "The submitted request is invalid. Please check the request body or query."
+          }
+        }
+      },
+      "CreatePaymentMasterRequest": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "CreatePaymentMasterResponse": {
+        "type": "object",
+        "properties": {
+          "PM_PaymentID": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Unique identifier for this payment from the call originating system. This is the same as PM_CR_PaymentID that is returned in the webhook.\nThis will not be in response for errors.\n",
+            "example": "1234567890"
+          },
+          "PM_Status": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Current payment status. Expected Values: Pending Approval, In Progress, Error, Issued, Success.\n\u003EFor the Asynchronous API, the initial response will always return a status of 'In Progress', with all subsequent status updates delivered through webhooks.",
+            "example": "In Progress"
+          },
+          "PM_MethodStored": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Unique identifier generated for this payment method by the ClaimsPay system. This identifier is used for subsequent payments.\nThis will not be in response for check payments or errors.\n\u003EThis is an immediate response that is sent out before a payment selection has been made. Please use PM_MethodID that is returned in the webhook. The PM_MethodID token is only usable after the original payment status is ‘Issued’ or ‘Success’. If the status of a payment is ‘In Progress’, do not use the token yet. The token is not a usable token until a payment method has been chosen.\n",
+            "example": "hkjasdh-asdhadsas-adsadsa-adsas"
+          },
+          "PM_Id": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Unique identifier generated for each payment request by ClaimsPay system. This is the same value as PM_IP_PaymentID that is returned in the webhook.\nThis will not be in response for errors.\n",
+            "example": "81867517-7790-483a-8808-e512f37a8a8d"
+          },
+          "PM_PaymentMethod": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "The payment method. See PMETHOD (Payment Method) Values above for more details.\n\u003EWith the Asynchronous API, the PM_Method field will neither be sent nor returned.\n\n This will not be in response for errors.\n",
+            "example": "Check"
+          },
+          "Status": {
+            "type": "string",
+            "description": "The status of the CreatePaymentMaster call.\nExpected Values: \"Success\", \"Error\".\n",
+            "example": "Success"
+          },
+          "PM_TranId": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Unique identifier generated for each payment by ClaimsPay system for Issued/Successful payments. Will be Check Number in the case of check payment. Present when a PM_Status is \"Issued\" or \"Success\". This is the same value that is returned in PM_CheckNumber in the webhook.\n",
+            "example": "15746704100028540"
+          },
+          "Error_Code": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Error code. An int is returned on validation errors. A string is returned on non-validation or processing errors. Present only when an error has occurred.\n",
+            "example": "1234"
+          },
+          "Error_Message": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Detailed error message. See CreatePaymentMaster Error Codes for more details.          \nPresent only when an error has occurred.\n",
+            "example": "Invalid payment method"
+          }
+        }
+      },
+      "StopPaymentRequest": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "StopPaymentResponse": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "UpdateProfileRequest": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "UpdateProfileResponse": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "ResendEmailsRequest": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "ResendEmailsResponse": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "GetPaymentStatusResponse": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "CreateVendorResponse": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "AttachDocumentResponse": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "parameters": {
+      "clientKeyParam": {
+        "in": "path",
+        "name": "ClientKey",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The Client Key"
+      }
+    },
+    "responses": {
+      "200-CreatePaymentMaster": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CreatePaymentMasterResponse"
+            }
+          }
+        },
+        "description": "Successful request"
+      },
+      "400-BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BadRequestResponse"
+            }
+          }
+        }
+      },
+      "401-Unauthorized": {
+        "description": "Unauthorized - Returned if Bearer token is not provided or expired."
+      },
+      "403-Forbidden": {
+        "description": "Forbidden - Returned if Bearer token does not have permission to perform operation."
+      },
+      "422-UnprocessableEntity": {
+        "description": "UnprocessableEntity"
+      },
+      "500-InternalServerError": {
+        "description": "InternalServerError",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer_auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}
