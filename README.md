@@ -27,7 +27,7 @@ MYRIDIUS (formerly RCG Global Services)  |  Client: One Inc. | Digital Insurance
     
 • Led knowledge transfer and cross-team collaboration across Dev, QA, and product teams, driving documentation alignment during product changes and onboarding teammates through structured handover sessions.
     
-**Tools**: Confluence, Markdown, Adobe Acrobat, JIRA, SharePoint, GitHub, Readme.com, VS Code, Cursor, Player Zero, AskRovo
+**Tools**: Confluence, Markdown, Adobe Acrobat, JIRA, SharePoint, GitHub, Readme.com, VS Code, Cursor, Player Zero, Rovo
 
 Senior Technical Writer — Paid Product Support	May 2023 – Aug 2023
 COGNIZANT  |  Client: Google — YouTube Paid Product Viewing Support
